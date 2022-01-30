@@ -1,0 +1,47 @@
+Arguments: 
+  /Users/christineanthony/.nvm/versions/node/v14.17.5/bin/node /usr/local/bin/yarn global bin
+
+PATH: 
+  /Users/christineanthony/.nvm/versions/node/v14.17.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin::
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  14.17.5
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/christineanthony/Desktop/NucampFolder/5-NodeJS-Express-MongoDB/nucampsiteServer/package.json: Unexpected token / in JSON at position 92
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "nucampsiteserver",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      //"start": "node ./bin/www"
+      "start": "nodemon ./bin/www"
+    },
+    "dependencies": {
+      "cookie-parser": "~1.4.4",
+      "debug": "~2.6.9",
+      "express": "~4.16.1",
+      "http-errors": "~1.6.3",
+      "jade": "~1.11.0",
+      "morgan": "~1.9.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
