@@ -3,8 +3,11 @@ const express = require("express");
 const path = require("path");
 //const cookieParser = require("cookie-parser"); //cookie-parser conflicts with express-sessions
 const logger = require("morgan");
-const session = require("express-session");
-const fileStore = require("session-file-store")(session); //invoke session to use file store
+//const session = require("express-session");
+//const fileStore = require("session-file-store")(session); //invoke session to use file store
+const passport = require("passport");
+//const authenticate = require("./authenticate");
+const config = require("./config");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -14,7 +17,7 @@ const partnerRouter = require("./routes/partnerRouter");
 
 const mongoose = require("mongoose");
 
-const url = "mongodb://localhost:27017/nucampsite";
+const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
   useCreateIndex: true,
   useFindAndModify: false,
@@ -38,39 +41,36 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //app.use(cookieParser('12345-67890-09876-54321')); //secret key, any string, encrypted on signed cookies sent from server to client
 
-app.use(
-  session({
-    name: "session-id",
-    secret: "1234-5678-9008-4578",
-    saveUninitialized: false,
-    resave: false,
-    store: new fileStore(), //set up object to use to save session info to hard disk at server in stead of memory
-  })
-);
+// app.use(
+//   session({
+//     name: "session-id",
+//     secret: "1234-5678-9008-4578",
+//     saveUninitialized: false,
+//     resave: false,
+//     store: new fileStore(), //set up object to use to save session info to hard disk at server instead of memory
+//   })
+// );
+
+app.use(passport.initialize());
+//app.use(passport.session());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
-function auth(req, res, next) {
-  console.log(req.session);
-  if (!req.session.user) {
-    // replaced signedCookies
+// function auth(req, res, next) {
+//   console.log(req.user);
+//   if (!req.user) {
+//     // replaced signedCookies
 
-    const err = new Error("You are not authenticated");
-    err.status = 401;
-    return next(err);
-  } else {
-    if (req.session.user === "authenticated") {
-      return next();
-    } else {
-      const err = new Error("You are not authenticated!");
-      err.status = 401;
-      return next(err);
-    }
-  }
-}
+//     const err = new Error("You are not authenticated");
+//     err.status = 401;
+//     return next(err);
+//   } else {
+//     return next();
+//   }
+// }
 
-app.use(auth);
+//app.use(auth);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/campsites", campsiteRouter);
