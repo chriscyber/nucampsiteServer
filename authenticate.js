@@ -37,3 +37,15 @@ exports.jwtPassport = passport.use(
 );
 
 exports.verifyUser = passport.authenticate("jwt", { session: false });
+
+exports.verifyAdmin = function (req, res, next) {
+  if (req.user.admin === true) {
+    return next();
+  } else {
+    const err = new Error(
+      "You do not have the proper permissions to perform this operation!"
+    );
+    err.status = 403;
+    return next(err);
+  }
+};

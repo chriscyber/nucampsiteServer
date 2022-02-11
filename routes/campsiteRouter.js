@@ -19,7 +19,7 @@ campsiteRouter
       })
       .catch((err) => next(err));
   })
-  .post(authenticate.verifyUser, (req, res, next) => {
+  .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Campsite.create(req.body) // will already be parsed from json middleware
       .then((campsite) => {
         console.log("Campsite created ", campsite);
