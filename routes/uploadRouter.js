@@ -13,14 +13,14 @@ const storage = multer.diskStorage({
 
 const imageFileFilter = (req, file, cb) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error("You can upload only image files"), false);
+    return cb(new Error("You can upload only image files!"), false);
   }
   cb(null, true);
 };
 
 const upload = multer({ storage: storage, fileFilter: imageFileFilter });
 
-const uplaodRouter = express.Router();
+const uploadRouter = express.Router();
 
 uploadRouter
   .route("/")
@@ -35,7 +35,7 @@ uploadRouter
     (req, res) => {
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
-      res.json(req.file); //to confirm to client that file received
+      res.json(req.file);
     }
   )
   .put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
