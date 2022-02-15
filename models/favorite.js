@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 const favoriteSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId, //ref to user document
+      type: mongoose.Schema.Types.ObjectId, //ref to user document coming in as req.user._id
       ref: "User",
     },
     campsites: [
       {
-        type: String,
-        required: true,
+        type: String, //req.params.campsiteId
+        ref: "Campsite",
       },
     ],
   },
@@ -20,6 +20,6 @@ const favoriteSchema = new Schema(
 );
 
 const Favorite = mongoose.model("Favorite", favoriteSchema);
-//1st argument singular and upper of name of collection which will be 'campsites'. Mongoose will match them. This instantiates documents.
+//1st argument singular and upper of name of collection which will be 'favorites'. Mongoose will match them. This instantiates documents.
 
-module.exports = Campsite;
+module.exports = Favorite;
